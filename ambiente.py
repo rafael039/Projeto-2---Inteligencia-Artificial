@@ -1,17 +1,19 @@
-import numpy
+import numpy as np
 
-linhas = 19
-colunas = 37
+linhasAmbiente = 19
+colunasAmbiente = 37
+
+temPassageiro = False
 
 acoes = ['cima','baixo','esquerda','direita']
 
 ## geração da tabela qsa
 
-qsa = numpy.full((linhas,colunas,len(acoes)),0)
+qsa = np.full((linhasAmbiente,colunasAmbiente,len(acoes)),0)
 
 ## geração da recompensa
 i = 0
-recompensa = numpy.full((linhas, colunas),-100)
+recompensa = np.full((linhasAmbiente, colunasAmbiente),-100)
 
 #linha 2
 for i in range(1,36):
