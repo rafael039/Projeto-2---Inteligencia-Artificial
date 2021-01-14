@@ -57,11 +57,11 @@ def proximoEstado(linhaAtual,colunaAtual,acao):
 
     if acoes[acao] == 'esquerda' and colunaAtual > 0:
         proxColuna -=1
-    elif acoes[acao] == 'direita' and colunaAtual < colunasAmbiente :
+    elif acoes[acao] == 'direita' and colunaAtual < colunasAmbiente -1:
         proxColuna +=1
     elif acoes[acao] == 'cima' and linhaAtual > 0:
         proxLinha -=1
-    elif acoes[acao] == 'baixo' and linhaAtual < linhasAmbiente :
+    elif acoes[acao] == 'baixo' and linhaAtual < linhasAmbiente -1:
         proxLinha +=1
     
     return proxLinha,proxColuna

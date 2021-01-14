@@ -42,4 +42,6 @@ for i in range(11,18):
 for i in range(1,19):
     recompensa[i][35] = -1
 
-
+# definir origem e destino temporariamente
+recompensa[5][7] = 100
+recompensa[13][25] = 99
