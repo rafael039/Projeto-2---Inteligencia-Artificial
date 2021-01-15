@@ -1,14 +1,8 @@
 from ambiente import *
 
 ## geração da origem e destino
-def isDestino(linha,coluna):
-    if recompensa[linha][coluna] == 99:
-        return True
-    else :
-        return False
-
-def isOrigem(linha,coluna):
-    if recompensa[linha][coluna] == 100:
+def isEstadoFinal(linha,coluna):
+    if recompensa[linha][coluna] == 99 or recompensa[linha][coluna] == 100:
         return True
     else :
         return False
@@ -67,20 +61,16 @@ def proximoEstado(linhaAtual,colunaAtual,acao):
     return proxLinha,proxColuna
 
 def menorCaminho(linhaInicial,colunaInicial):
-    linhaAtual, colunaAtual = linhaInicial, colunaInicial
-    caminho = []
-    caminho.append([linhaAtual,colunaAtual])
-
-    while not isOrigem(linhaAtual,colunaAtual):
-        acao = proximaAcao(linhaAtual,colunaAtual,1)
-        linhaAtual,colunaAtual = proximoEstado(linhaAtual,colunaAtual,acao)
+    if isEstadoFinal(linhaInicial,colunaInicial):
+        return []
+    else:
+        linhaAtual, colunaAtual = linhaInicial, colunaInicial
+        caminho = []
         caminho.append([linhaAtual,colunaAtual])
-    
-    # chegou na origem, redefinindo recompensa
-    recompensa[linhaAtual,colunaAtual] = -1 
 
-    while not isDestino(linhaAtual,colunaAtual):
-        acao = proximaAcao(linhaAtual,colunaAtual,1)
-        linhaAtual,colunaAtual = proximoEstado(linhaAtual,colunaAtual,acao)
-        caminho.append([linhaAtual,colunaAtual])
+        while not isEstadoFinal(linhaAtual,colunaAtual):
+            acao = proximaAcao(linhaAtual,colunaAtual,1)
+            linhaAtual,colunaAtual = proximoEstado(linhaAtual,colunaAtual,acao)
+            caminho.append([linhaAtual,colunaAtual])
+    return caminho
     

@@ -6,9 +6,13 @@ fator_desconto = 0.9
 taxa_aprendizado = 0.9
 
 for tentativa in range(1000):
+    #redefine valores de recompensa
+    #recompensa[5][7] = 100
+    #recompensa[13][25] = 99
+
     linha, coluna = setPosicaoInicial()
 
-    while not isOrigem(linha,coluna):
+    while not isEstadoFinal(linha,coluna):
         acao = proximaAcao(linha,coluna,epsilon)
 
         linhaAntiga, colunaAntiga = linha, coluna
@@ -21,26 +25,11 @@ for tentativa in range(1000):
         qValueNovo = qValueAntigo + (taxa_aprendizado * diferenca_temporal)
         qsa[linhaAntiga,colunaAntiga,acao] = qValueNovo
 
-        print("Origem - Atual: "+str(qsa[linha,coluna,acao]))
-    
-    while not isDestino(linha,coluna):
-        acao = proximaAcao(linha,coluna,epsilon)
-
-        linhaAntiga, colunaAntiga = linha, coluna
-        linha, coluna = proximoEstado(linha, coluna, acao)
-        
-        rec = recompensa[linha, coluna]
-        qValueAntigo = qsa[linhaAntiga,colunaAntiga,acao]
-        diferenca_temporal = rec + (fator_desconto * np.max(qsa[linha,coluna])) - qValueAntigo
-
-        qValueNovo = qValueAntigo + (taxa_aprendizado * diferenca_temporal)
-        qsa[linhaAntiga,colunaAntiga,acao] = qValueNovo
-
-        print("Destino - Atual: "+str(qsa[linha,coluna,acao])+"| linha="+str(linha)+" - coluna="+str(coluna))
+        print('x= '+str(linha)+'y= '+str(coluna)+'| Acao:'+acoes[acao])
 
     i+=1
     print('------------------------------------------')
-    print(i)
+    print("Treinamento "+str(i))
     print('------------------------------------------')
    
 

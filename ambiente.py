@@ -1,7 +1,7 @@
 import numpy as np
 
-linhasAmbiente = 19
-colunasAmbiente = 37
+linhasAmbiente = 11
+colunasAmbiente = 35
 
 temPassageiro = False
 
@@ -16,32 +16,42 @@ i = 0
 recompensa = np.full((linhasAmbiente, colunasAmbiente),-100)
 
 #linha 2
-for i in range(1,36):
+for i in range(1,34):
     recompensa[1][i] = -1
-#linha 6
-for i in range(1,36):
-    recompensa[5][i] = -1
-#linha 14
-for i in range(1,36):
-    recompensa[13][i] = -1
-#linha 18
-for i in range(1,36):
-    recompensa[17][i] = -1
+#linha 4
+for i in range(1,34):
+    recompensa[3][i] = -1
+#linha 8
+for i in range(1,34):
+    recompensa[7][i] = -1
+#linha 10
+for i in range(1,34):
+    recompensa[9][i] = -1
 
 #coluna 2
-for i in range(1,19):
+for i in range(1,10):
     recompensa[i][1] = -1
 
-#coluna 19
-for i in range(1,10):
-    recompensa[i][18] = -1
-for i in range(11,18):
-    recompensa[i][18] = -1
+#coluna 10
+for i in range (3,8):
+    recompensa[i][9] = -1
 
-# coluna 36
-for i in range(1,19):
-    recompensa[i][35] = -1
+#coluna 18
+for i in range(1,5):
+    recompensa[i][17] = -1
+for i in range(6,10):
+    recompensa[i][17] = -1
+
+#coluna 26
+for i in range (3,8):
+    recompensa[i][25] = -1
+
+# coluna 35
+for i in range(1,10):
+    recompensa[i][34] = -1
 
 # definir origem e destino temporariamente
-recompensa[5][7] = 100
-recompensa[13][25] = 99
+recompensa[5][25] = 100
+#recompensa[13][25] = 99
+
+print(recompensa)
