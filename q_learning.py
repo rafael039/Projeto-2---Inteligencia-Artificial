@@ -1,9 +1,11 @@
 from funcoes import *
 
 #paramentros de treinamento
-epsilon = 0.5
+epsilon = 0.2
 fator_desconto = 0.9
 taxa_aprendizado = 0.9
+
+j=1
 
 for tentativa in range(1000):
     #redefine valores de recompensa
@@ -25,12 +27,9 @@ for tentativa in range(1000):
         qValueNovo = qValueAntigo + (taxa_aprendizado * diferenca_temporal)
         qsa[linhaAntiga,colunaAntiga,acao] = qValueNovo
 
-        print('x= '+str(linha)+'y= '+str(coluna)+'| Acao:'+acoes[acao])
+        print("Tr: "+str(j)+'| x= '+str(linha)+' y= '+str(coluna)+'| Acao:'+acoes[acao])
 
-    i+=1
-    print('------------------------------------------')
-    print("Treinamento "+str(i))
-    print('------------------------------------------')
+    j+=1
    
 
 print('O desgracadinho ta monstro!')

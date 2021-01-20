@@ -1,9 +1,13 @@
 import numpy as np
 
-linhasAmbiente = 11
-colunasAmbiente = 35
+linhasAmbiente = 9
+colunasAmbiente = 33
 
 temPassageiro = False
+
+recompensaCaminho = 0
+recompensaDestino = 100
+valorParede = -1
 
 acoes = ['cima','baixo','esquerda','direita']
 
@@ -13,45 +17,45 @@ qsa = np.full((linhasAmbiente,colunasAmbiente,len(acoes)),0)
 
 ## geração da recompensa
 i = 0
-recompensa = np.full((linhasAmbiente, colunasAmbiente),-100)
+recompensa = np.full((linhasAmbiente, colunasAmbiente),valorParede)
 
-#linha 2
-for i in range(1,34):
-    recompensa[1][i] = -1
-#linha 4
-for i in range(1,34):
-    recompensa[3][i] = -1
-#linha 8
-for i in range(1,34):
-    recompensa[7][i] = -1
-#linha 10
-for i in range(1,34):
-    recompensa[9][i] = -1
+#linha 1
+for i in range(0,33):
+    recompensa[0][i] = recompensaCaminho
+#linha 3
+for i in range(0,33):
+    recompensa[2][i] = recompensaCaminho
+#linha 7
+for i in range(0,33):
+    recompensa[6][i] = recompensaCaminho
+#linha 9
+for i in range(0,33):
+    recompensa[8][i] = recompensaCaminho
 
-#coluna 2
-for i in range(1,10):
-    recompensa[i][1] = -1
+#coluna 1
+for i in range(0,9):
+    recompensa[i][0] = recompensaCaminho
 
-#coluna 10
-for i in range (3,8):
-    recompensa[i][9] = -1
+#coluna 9
+for i in range (2,7):
+    recompensa[i][8] = recompensaCaminho
 
-#coluna 18
-for i in range(1,5):
-    recompensa[i][17] = -1
-for i in range(6,10):
-    recompensa[i][17] = -1
+#coluna 17
+for i in range(0,4):
+    recompensa[i][16] = recompensaCaminho
+for i in range(5,9):
+    recompensa[i][16] = recompensaCaminho
 
-#coluna 26
-for i in range (3,8):
-    recompensa[i][25] = -1
+#coluna 25
+for i in range (2,7):
+    recompensa[i][24] = recompensaCaminho
 
-# coluna 35
-for i in range(1,10):
-    recompensa[i][34] = -1
+# coluna 34
+for i in range(0,9):
+    recompensa[i][32] = recompensaCaminho
 
 # definir origem e destino temporariamente
-recompensa[5][25] = 100
-#recompensa[13][25] = 99
+recompensa[2][6] = recompensaDestino
+#recompensa[8][24] = recompensaDestino
 
-print(recompensa)
+#print(recompensa)

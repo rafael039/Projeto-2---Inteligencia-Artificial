@@ -2,13 +2,13 @@ from ambiente import *
 
 ## geração da origem e destino
 def isEstadoFinal(linha,coluna):
-    if recompensa[linha][coluna] == 99 or recompensa[linha][coluna] == 100:
+    if recompensa[linha][coluna] == recompensaDestino:
         return True
     else :
         return False
 
 def isParede(linha,coluna):
-    if recompensa[linha][coluna] == -100:
+    if recompensa[linha][coluna] == valorParede:
         return True
     else: 
         return False
@@ -41,10 +41,11 @@ def setPosicaoInicial():
     return posicaox,posicaoy
 
 def proximaAcao(linhaAtual,colunaAtual,epsilon):
-    if np.random.random() < epsilon:
+    if np.random.random() <= epsilon:
         return np.argmax(qsa[linhaAtual,colunaAtual])
     else:
         return np.random.randint(4)
+        # enquanto o próximo estado der numa parede, peça um novo estado
 
 def proximoEstado(linhaAtual,colunaAtual,acao):
     proxLinha, proxColuna = linhaAtual, colunaAtual
@@ -72,5 +73,5 @@ def menorCaminho(linhaInicial,colunaInicial):
             acao = proximaAcao(linhaAtual,colunaAtual,1)
             linhaAtual,colunaAtual = proximoEstado(linhaAtual,colunaAtual,acao)
             caminho.append([linhaAtual,colunaAtual])
+            print(isEstadoFinal(linhaAtual,colunaAtual))
     return caminho
-    
