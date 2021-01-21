@@ -1,4 +1,5 @@
 import numpy as np
+import json
 
 linhasAmbiente = 9
 colunasAmbiente = 33
@@ -8,6 +9,9 @@ temPassageiro = False
 recompensaCaminho = 0
 recompensaDestino = 100
 valorParede = -1
+
+linhaDestino = 8
+colunaDestino = 24
 
 acoes = ['cima','baixo','esquerda','direita']
 
@@ -54,8 +58,7 @@ for i in range (2,7):
 for i in range(0,9):
     recompensa[i][32] = recompensaCaminho
 
-# definir origem e destino temporariamente
-recompensa[2][6] = recompensaDestino
-#recompensa[8][24] = recompensaDestino
+# definir origem e destino
+recompensa[linhaDestino][colunaDestino] = recompensaDestino
 
 #print(recompensa)

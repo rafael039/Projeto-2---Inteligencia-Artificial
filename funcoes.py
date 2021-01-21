@@ -35,7 +35,7 @@ def setOrigemDestino():
 def setPosicaoInicial():
     posicaox,posicaoy = 0,0
 
-    while not isParede(posicaox,posicaoy):
+    while isParede(posicaox,posicaoy):
         posicaox = np.random.randint(linhasAmbiente)
         posicaoy = np.random.randint(colunasAmbiente)
     return posicaox,posicaoy
@@ -47,19 +47,42 @@ def proximaAcao(linhaAtual,colunaAtual,epsilon):
         return np.random.randint(4)
         # enquanto o próximo estado der numa parede, peça um novo estado
 
-def proximoEstado(linhaAtual,colunaAtual,acao):
+def proximaAcaoAleatoria(acoes):
+        return np.random.choice(acoes)
+        
+def proximoEstado(linhaAtual,colunaAtual,epsilon):
     proxLinha, proxColuna = linhaAtual, colunaAtual
+    listaAcoes = acoes.copy()
+    iAcao = proximaAcao(linhaAtual,colunaAtual,epsilon)
+    
 
-    if acoes[acao] == 'esquerda' and colunaAtual > 0:
+    if acoes[iAcao] == 'esquerda' and colunaAtual > 0:
         proxColuna -=1
-    elif acoes[acao] == 'direita' and colunaAtual < colunasAmbiente -1:
+    elif acoes[iAcao] == 'direita' and colunaAtual < colunasAmbiente -1:
         proxColuna +=1
-    elif acoes[acao] == 'cima' and linhaAtual > 0:
+    elif acoes[iAcao] == 'cima' and linhaAtual > 0:
         proxLinha -=1
-    elif acoes[acao] == 'baixo' and linhaAtual < linhasAmbiente -1:
+    elif acoes[iAcao] == 'baixo' and linhaAtual < linhasAmbiente -1:
         proxLinha +=1
     
-    return proxLinha,proxColuna
+
+    while recompensa[proxLinha][proxColuna] == -1 : #úkltima ação deu errado
+        listaAcoes.remove(acoes[iAcao]) #remove ação anterior
+        acaoStr = proximaAcaoAleatoria(listaAcoes)
+
+        proxLinha, proxColuna = linhaAtual, colunaAtual
+
+        if acaoStr == 'esquerda' and colunaAtual > 0:
+            proxColuna -=1
+        elif acaoStr == 'direita' and colunaAtual < colunasAmbiente -1:
+            proxColuna +=1
+        elif acaoStr == 'cima' and linhaAtual > 0:
+            proxLinha -=1
+        elif acaoStr == 'baixo' and linhaAtual < linhasAmbiente -1:
+            proxLinha +=1
+        iAcao = acoes.index(acaoStr)
+
+    return proxLinha,proxColuna,iAcao
 
 def menorCaminho(linhaInicial,colunaInicial):
     if isEstadoFinal(linhaInicial,colunaInicial):
@@ -70,8 +93,11 @@ def menorCaminho(linhaInicial,colunaInicial):
         caminho.append([linhaAtual,colunaAtual])
 
         while not isEstadoFinal(linhaAtual,colunaAtual):
-            acao = proximaAcao(linhaAtual,colunaAtual,1)
-            linhaAtual,colunaAtual = proximoEstado(linhaAtual,colunaAtual,acao)
+
+            linhaAtual,colunaAtual,acaoAtual = proximoEstado(linhaAtual,colunaAtual,1)
+
             caminho.append([linhaAtual,colunaAtual])
-            print(isEstadoFinal(linhaAtual,colunaAtual))
+            
+            print('x= '+str(linhaAtual)+' y= '+str(colunaAtual)+'| Acao:'+acoes[acaoAtual])
+            #print(isEstadoFinal(linhaAtual,colunaAtual))
     return caminho
