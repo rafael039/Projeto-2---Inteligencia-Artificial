@@ -1,3 +1,3 @@
-from q_learning import *
+from arquivos import *
 
-print(menorCaminho(1,1))
+print(qsa)
