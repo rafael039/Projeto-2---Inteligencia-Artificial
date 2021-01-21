@@ -4,13 +4,13 @@ from funcoes import *
 epsilon = 0.2
 fator_desconto = 0.9
 taxa_aprendizado = 0.9
+treinamentos = 1000
 
 j=1
 
-for tentativa in range(5):
-    #redefine valores de recompensa
-    #recompensa[5][7] = 100
-    #recompensa[13][25] = 99
+print('Treinando para o ponto ('+str(linhaDestino)+','+str(colunaDestino)+'):')
+
+for tentativa in range(treinamentos):
 
     linha, coluna = setPosicaoInicial()
 
@@ -26,7 +26,13 @@ for tentativa in range(5):
         qValueNovo = qValueAntigo + (taxa_aprendizado * diferenca_temporal)
         qsa[linhaAntiga,colunaAntiga,acaoAtual] = qValueNovo
 
-        print("Tr: "+str(j)+'| x= '+str(linha)+' y= '+str(coluna)+'| Acao:'+acoes[acaoAtual]+'| R: '+str(recompensa[linha][coluna]))
+        # escolha o feedback do treinamento:
+        
+        # detalhado
+        # print("Tr: "+str(j)+'| x= '+str(linha)+' y= '+str(coluna)+'| Acao:'+acoes[acaoAtual]+'| R: '+str(recompensa[linha][coluna]))
+
+    # simples
+    print(str(j)+' de '+str(treinamentos)+'...')
 
     j+=1
    

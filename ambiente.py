@@ -1,5 +1,5 @@
 import numpy as np
-import json
+import csv
 
 linhasAmbiente = 9
 colunasAmbiente = 33
