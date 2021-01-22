@@ -4,7 +4,7 @@ from funcoes import *
 epsilon = 0.2
 fator_desconto = 0.9
 taxa_aprendizado = 0.9
-treinamentos = 1000
+treinamentos = 10000
 
 j=1
 
