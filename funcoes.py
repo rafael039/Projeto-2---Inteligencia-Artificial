@@ -40,9 +40,9 @@ def setPosicaoInicial():
         posicaoy = np.random.randint(colunasAmbiente)
     return posicaox,posicaoy
 
-def proximaAcao(linhaAtual,colunaAtual,epsilon):
+def proximaAcao(linhaAtual,colunaAtual,epsilon,qsa):
     if np.random.random() <= epsilon:
-        return np.argmax(qsa[linhaAtual,colunaAtual])
+        return np.argmax(qsa[linhaAtual][colunaAtual])
     else:
         return np.random.randint(4)
         # enquanto o próximo estado der numa parede, peça um novo estado
@@ -50,10 +50,10 @@ def proximaAcao(linhaAtual,colunaAtual,epsilon):
 def proximaAcaoAleatoria(acoes):
         return np.random.choice(acoes)
         
-def proximoEstado(linhaAtual,colunaAtual,epsilon):
+def proximoEstado(linhaAtual,colunaAtual,epsilon,qsa):
     proxLinha, proxColuna = linhaAtual, colunaAtual
     listaAcoes = acoes.copy()
-    iAcao = proximaAcao(linhaAtual,colunaAtual,epsilon)
+    iAcao = proximaAcao(linhaAtual,colunaAtual,epsilon,qsa)
     
 
     if acoes[iAcao] == 'esquerda' and colunaAtual > 0:
@@ -84,7 +84,7 @@ def proximoEstado(linhaAtual,colunaAtual,epsilon):
 
     return proxLinha,proxColuna,iAcao
 
-def menorCaminho(linhaInicial,colunaInicial):
+def menorCaminho(linhaInicial,colunaInicial,qsa):
     if isEstadoFinal(linhaInicial,colunaInicial):
         return []
     else:
@@ -94,10 +94,11 @@ def menorCaminho(linhaInicial,colunaInicial):
 
         while not isEstadoFinal(linhaAtual,colunaAtual):
 
-            linhaAtual,colunaAtual,acaoAtual = proximoEstado(linhaAtual,colunaAtual,1)
+            linhaAtual,colunaAtual,acaoAtual = proximoEstado(linhaAtual,colunaAtual,1,qsa)
 
             caminho.append([linhaAtual,colunaAtual])
             
             print('x= '+str(linhaAtual)+' y= '+str(colunaAtual)+'| Acao:'+acoes[acaoAtual])
             #print(isEstadoFinal(linhaAtual,colunaAtual))
     return caminho
+
