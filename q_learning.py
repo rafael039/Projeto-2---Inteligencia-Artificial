@@ -1,5 +1,11 @@
 from funcoes import *
 
+print('Insira a coordenada do ponto a ser treinado')
+linhaDestino = int(input('Linha: '))
+colunaDestino = int(input('Coluna: '))
+
+recompensa[linhaDestino][colunaDestino] = recompensaDestino
+
 #paramentros de treinamento
 epsilon = 0.1
 fator_desconto = 0.9
@@ -19,7 +25,7 @@ for passo in range(k):
         while not isEstadoFinal(linha,coluna):
             linhaAntiga, colunaAntiga = linha, coluna
 
-            linha, coluna,acaoAtual = proximoEstado(linha, coluna, epsilon)
+            linha, coluna,acaoAtual = proximoEstado(linha, coluna, epsilon,qsa)
             
             rec = recompensa[linha, coluna]
             qValueAntigo = qsa[linhaAntiga,colunaAntiga,acaoAtual]

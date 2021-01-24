@@ -5,14 +5,10 @@ import csv
 linhasAmbiente = 9
 colunasAmbiente = 21
 
-temPassageiro = False
-
 recompensaCaminho = 0
 recompensaDestino = 100
 valorParede = -1
 
-linhaDestino = 8
-colunaDestino = 1
 
 # acoes disponiveis
 acoes = ['cima','baixo','esquerda','direita']
@@ -66,8 +62,6 @@ recompensa[5][15] = recompensaCaminho
 for i in range(0,9):
     recompensa[i][20] = recompensaCaminho
 
-# definir origem e destino
-recompensa[linhaDestino][colunaDestino] = recompensaDestino
 
 # salva a tabela qsa com o mapa
 #arqrec = open('recTable','w')

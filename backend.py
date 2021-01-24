@@ -1,8 +1,11 @@
 import csv
 from funcoes import menorCaminho
+from ambiente import *
 
 def transportar(linhaOrigem,colunaOrigem,linhaDestino,colunaDestino):
-
+    
+    # definir destino
+    recompensa[linhaDestino][colunaDestino] = recompensaDestino
     #print('Carregando arquivo:')
 
     caminhoArquivo = 'coordenadasTreinadas/ponto ('+str(linhaDestino)+','+str(colunaDestino)+').csv' # caminho do arquivo
