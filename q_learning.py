@@ -3,6 +3,7 @@ from funcoes import *
 print('Insira a coordenada do ponto a ser treinado')
 linhaDestino = int(input('Linha: '))
 colunaDestino = int(input('Coluna: '))
+nomePonto = input('Insira o nome desse ponto: ')
 
 recompensa[linhaDestino][colunaDestino] = recompensaDestino
 
@@ -10,7 +11,7 @@ recompensa[linhaDestino][colunaDestino] = recompensaDestino
 epsilon = 0.1
 fator_desconto = 0.9
 taxa_aprendizado = 0.9
-treinamentos = 300000
+treinamentos = 350000
 passos = 10
 j=1
 k=int(treinamentos/passos)
