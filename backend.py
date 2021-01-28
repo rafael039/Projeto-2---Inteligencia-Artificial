@@ -69,3 +69,5 @@ def getPontosTreinados():
             pontosTreinados[i] = ponto[0]
         i+=1
     return pontosTreinados
+
+
