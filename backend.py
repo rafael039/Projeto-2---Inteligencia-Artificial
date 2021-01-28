@@ -1,26 +1,24 @@
+import os
 import csv
 from funcoes import menorCaminho
 from ambiente import *
 
-def transportar(nomePonto,linhaDestino,colunaDestino):
-    
-    # definir destino
-    recompensa[linhaDestino][colunaDestino] = recompensaDestino
-    #print('Carregando arquivo:')
-
-    caminhoArquivo = 'coordenadasTreinadas/'+nomePonto+'.csv' # caminho do arquivo
-
-    csvArq = open(caminhoArquivo,'r') # ponteiro pra um arquivo
-    csvPtr = csv.reader(csvArq,delimiter=',') # ponteiro para um csv
+def transportar(pontoOrigem,pontoDestino):
 
     qsa = [] 
     i,j = 0,0
+
+    caminhoArquivo = 'coordenadasTreinadas/'+pontoDestino+'.csv' # caminho do arquivo
+
+    csvArq = open(caminhoArquivo,'r') # ponteiro pra um arquivo
+    csvPtr = csv.reader(csvArq,delimiter=',') # ponteiro para um csv
     
-    temp = next(csvPtr)
-    temp = ''.join(temp)
-    temp = temp.strip('()')
-    temp = temp.split(' ')
-    Origem = list(map(int,temp)) 
+    # definir destino
+    linhaOrigem,colunaOrigem = nomeToCoordenada(pontoOrigem)
+    linhaDestino,colunaDestino = nomeToCoordenada(pontoDestino)
+    recompensa[linhaDestino][colunaDestino] = recompensaDestino
+
+    next(csvPtr) # pula a primeira linha
 
     for row in csvPtr:
         qsa.append(row)
@@ -41,5 +39,33 @@ def transportar(nomePonto,linhaDestino,colunaDestino):
         j=0
 
     csvArq.close()
+    
+    return menorCaminho(linhaOrigem,colunaOrigem,qsa)
 
-    return menorCaminho(Origem[0],Origem[1],qsa)
+def nomeToCoordenada(pontoTaxi):
+
+    caminhoArquivo = 'coordenadasTreinadas/'+pontoTaxi+'.csv' # caminho do arquivo
+
+    csvArq = open(caminhoArquivo,'r') # ponteiro pra um arquivo
+    csvPtr = csv.reader(csvArq,delimiter=',') # ponteiro para um csv
+
+    linhaTemp = next(csvPtr)
+    linhaTemp = ''.join(linhaTemp)
+    linhaTemp = linhaTemp.split(' ')
+    coordenada = list(map(int,linhaTemp)) 
+
+    return coordenada
+
+# retorna o nome dos pontos treinados que estão na pasta coordenadastreinadas
+def getPontosTreinados():
+    
+    i=0
+    pontosTreinados = os.listdir('coordenadasTreinadas')
+    for ponto in pontosTreinados:
+        if ponto.startswith('.'):
+            pontosTreinados.remove(ponto)
+        else:
+            ponto = ponto.split('.csv')
+            pontosTreinados[i] = ponto[0]
+        i+=1
+    return pontosTreinados
