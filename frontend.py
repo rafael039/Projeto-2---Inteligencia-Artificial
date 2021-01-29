@@ -1,6 +1,5 @@
 import tkinter as tk
-from tkinter import Label, Toplevel, ttk
-from tkinter import messagebox
+from tkinter import Toplevel, ttk, messagebox
 from backend import *
 from q_learning import *
 
@@ -23,7 +22,7 @@ def viajar():
     print(transportar(origem,destino))
 
 
-def treinar(linha,coluna):
+def treinar(linha,coluna,nome):
     """
     Função que vai definir a ação do botão treinar. 
     Recebe um inteiro para a linha e um para a coluna
@@ -31,6 +30,8 @@ def treinar(linha,coluna):
     # TODO : Print da função treinarPonto() na interface em uma progressBar
     if linha < linhasAmbiente and coluna < colunasAmbiente:
         treinarPonto(linha,coluna)
+        print("Gerando arquivo...")
+        salvarQsa(linha,coluna,nome,qsa)
     else:
         messagebox.showerror('Erro','Este ponto não existe no mapa. \nPor favor, escolha um ponto válido.')
     
@@ -42,7 +43,7 @@ def janelaNovoPonto():
     Desenha a janela ao clicar no botão Treinar 
     """
     janNovoPonto=Toplevel(janela)
-    janNovoPonto.geometry('250x220')
+    janNovoPonto.geometry('250x270')
     janNovoPonto.title('Treinar um novo ponto')
 
     #
@@ -76,6 +77,18 @@ na borda do mapa'
     )
     entColuna.place(x=80,y=120)
     #
+    lblNome = tk.Label(
+        master=janNovoPonto,
+        text='Nome:'
+    )
+    lblNome.place(x=80,y=140)
+
+    entNome = tk.Entry(
+        master=janNovoPonto,
+        width=10
+    )
+    entNome.place(x=80,y=160)
+    #
     btnNovoPonto = tk.Button(
         master=janNovoPonto,
         width=7,
@@ -84,41 +97,17 @@ na borda do mapa'
         activeforeground='#555',
         text = 'treinar',
         #cria uma função temporária
-        command=lambda: treinar(int(entLinha.get()),int(entColuna.get())) 
+        command=lambda: treinar(int(entLinha.get()),int(entColuna.get()),entNome.get()) 
     )
 
-    btnNovoPonto.place(x=80,y=150)
+    btnNovoPonto.place(x=80,y=190)
 
-    #      : Este pedaço do código é da gravação do ponto treinado em disco.
-    # TODO : Deve ser inserido em uma nova função do backend,
-    #      : que recebe a tabela qsa da função treinarPonto e realiza estes comandos para a gravação
-
-    #######################################################################
-    #print('Insira a coordenada do ponto a ser treinado')
-    #linhaDestino = int(input('Linha: '))
-    #colunaDestino = int(input('Coluna: '))
-    #nomePonto = input('Insira o nome desse ponto: ')
-    #
-    #treinarPonto(linhaDestino,colunaDestino)
-    #
-    #print("Gerando arquivo...")
-    #caminhoArquivo = 'coordenadasTreinadas/'+nomePonto+'.csv'
-    #
-    #csvArq = open(caminhoArquivo,'w')
-    #csvPtr = csv.writer(csvArq,delimiter=',')
-    #temp = []
-    #temp.append(str(linhaDestino)+' '+str(colunaDestino))
-    #csvPtr.writerow(temp)
-    #for linhaQsa in qsa: # uma linha da tabela qsa, contém todas as açoes para todos os pontos da linha
-    #    csvPtr.writerow(linhaQsa) 
-    #print("Concluído!")
-    #######################################################################
 
 pontosTreinados = getPontosTreinados()
 
 #declaração das janelas
 janela = tk.Tk()
-janela.geometry('1280x720')
+janela.geometry('1120x530')
 janela.resizable(width=False,height=False)
 janela.title('Taxi')
 
@@ -176,12 +165,11 @@ btnTreinarNovoPonto = tk.Button(
     height=1,
     activebackground='#ddd',
     activeforeground='#555',
-    text = 'treinar',
+    text = 'Treinar',
     command=janelaNovoPonto
 )
 
-btnTreinarNovoPonto.place(x=800,y=8)
-
+btnTreinarNovoPonto.place(x=900,y=8)
 #
 
 btnViajar = tk.Button(
@@ -190,12 +178,18 @@ btnViajar = tk.Button(
     height=1,
     activebackground='#ddd',
     activeforeground='#555',
-    text = 'clique',
+    text = 'Viajar',
     command=viajar
 )
-btnViajar.place(x=1200,y=8)
+btnViajar.place(x=1000,y=8)
 
 # fim dos objetos dentro de frameControles
+
+# Imagem
+canvasMapa = tk.Canvas(width=1120,height=480)
+canvasMapa.place(x=0,y=51)
+imagemMapa = tk.PhotoImage(file="imagens/Cenario.png") 
+canvasMapa.create_image(0, 0, image=imagemMapa, anchor='nw')
 
 janela.mainloop()
 

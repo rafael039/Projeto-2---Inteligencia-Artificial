@@ -2,6 +2,7 @@ import os
 import csv
 from funcoes import menorCaminho
 from ambiente import *
+from q_learning import *
 
 def transportar(pontoOrigem,pontoDestino):
 
@@ -70,4 +71,15 @@ def getPontosTreinados():
         i+=1
     return pontosTreinados
 
-
+def salvarQsa(linhaDestino,colunaDestino,nomePonto,qsa):
+    
+    caminhoArquivo = 'coordenadasTreinadas/'+nomePonto+'.csv'
+    
+    csvArq = open(caminhoArquivo,'w')
+    csvPtr = csv.writer(csvArq,delimiter=',')
+    temp = []
+    temp.append(str(linhaDestino)+' '+str(colunaDestino))
+    csvPtr.writerow(temp)
+    for linhaQsa in qsa: # uma linha da tabela qsa, contém todas as açoes para todos os pontos da linha
+        csvPtr.writerow(linhaQsa) 
+    print("Concluído!")
