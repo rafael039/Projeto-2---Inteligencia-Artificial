@@ -35,6 +35,9 @@ def setOrigemDestino():
 def setPosicaoInicial():
     posicaox,posicaoy = 0,0
 
+    posicaox = np.random.randint(linhasAmbiente)
+    posicaoy = np.random.randint(colunasAmbiente)
+
     while isParede(posicaox,posicaoy):
         posicaox = np.random.randint(linhasAmbiente)
         posicaoy = np.random.randint(colunasAmbiente)

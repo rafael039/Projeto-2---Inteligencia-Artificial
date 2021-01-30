@@ -5,13 +5,12 @@ from funcoes import *
 epsilon = 0.1
 fator_desconto = 0.9
 taxa_aprendizado = 0.9
-treinamentos = 350000
-passos = 350
+treinamentos = 15000
+passos = 15
 tentativa = 0
 passoAtual = 0
 
 def treinarPonto(linhaDestino,colunaDestino,janela,barraProgresso):
-    
     
     recompensa[linhaDestino][colunaDestino] = recompensaDestino
 
