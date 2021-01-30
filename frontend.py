@@ -1,3 +1,4 @@
+import time
 import tkinter as tk
 from tkinter import Toplevel, ttk, messagebox
 from backend import *
@@ -22,16 +23,37 @@ def viajar():
     print(transportar(origem,destino))
 
 
-def treinar(linha,coluna,nome):
+def treinar(linha,coluna,nome,janTreinamento):
     """
     Função que vai definir a ação do botão treinar. 
     Recebe um inteiro para a linha e um para a coluna
     """
     # TODO : Print da função treinarPonto() na interface em uma progressBar
     if linha < linhasAmbiente and coluna < colunasAmbiente:
-        treinarPonto(linha,coluna)
-        print("Gerando arquivo...")
+
+        lblTreinamento = tk.Label(
+            master=janTreinamento,
+            text='Treinando...'
+        )
+        lblTreinamento.place(x=85,y=220)
+
+        progressoTreinamento = ttk.Progressbar(
+            janTreinamento, 
+            orient='horizontal',
+            length=250,
+            mode='determinate'
+        )
+        progressoTreinamento.place(x=5,y=245)
+
+        progressoTreinamento['value'] = 0 #inicializa a barra de progresso
+        janela.update_idletasks()
+        treinarPonto(linha,coluna,janela,progressoTreinamento)
+        lblTreinamento['text'] = 'Salvando...'
         salvarQsa(linha,coluna,nome,qsa)
+        lblTreinamento['text'] = 'Concluído!'
+        time.sleep(1)
+        lblTreinamento.destroy()
+        progressoTreinamento.destroy()
     else:
         messagebox.showerror('Erro','Este ponto não existe no mapa. \nPor favor, escolha um ponto válido.')
     
@@ -43,8 +65,9 @@ def janelaNovoPonto():
     Desenha a janela ao clicar no botão Treinar 
     """
     janNovoPonto=Toplevel(janela)
-    janNovoPonto.geometry('250x270')
+    janNovoPonto.geometry('260x270')
     janNovoPonto.title('Treinar um novo ponto')
+    janNovoPonto.pack_propagate(0)
 
     #
     lblGuiatreinamento = tk.Label(
@@ -81,13 +104,13 @@ na borda do mapa'
         master=janNovoPonto,
         text='Nome:'
     )
-    lblNome.place(x=80,y=140)
+    lblNome.place(x=80,y=145)
 
     entNome = tk.Entry(
         master=janNovoPonto,
         width=10
     )
-    entNome.place(x=80,y=160)
+    entNome.place(x=80,y=165)
     #
     btnNovoPonto = tk.Button(
         master=janNovoPonto,
@@ -97,7 +120,7 @@ na borda do mapa'
         activeforeground='#555',
         text = 'treinar',
         #cria uma função temporária
-        command=lambda: treinar(int(entLinha.get()),int(entColuna.get()),entNome.get()) 
+        command=lambda: treinar(int(entLinha.get()),int(entColuna.get()),entNome.get(),janNovoPonto) 
     )
 
     btnNovoPonto.place(x=80,y=190)
@@ -188,7 +211,7 @@ btnViajar.place(x=1000,y=8)
 # Imagem
 canvasMapa = tk.Canvas(width=1120,height=480)
 canvasMapa.place(x=0,y=51)
-imagemMapa = tk.PhotoImage(file="imagens/Cenario.png") 
+imagemMapa = tk.PhotoImage(file=os.path.normpath("imagens/Cenario.png")) 
 canvasMapa.create_image(0, 0, image=imagemMapa, anchor='nw')
 
 janela.mainloop()

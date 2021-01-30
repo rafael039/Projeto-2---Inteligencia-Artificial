@@ -9,7 +9,7 @@ def transportar(pontoOrigem,pontoDestino):
     qsa = [] 
     i,j = 0,0
 
-    caminhoArquivo = 'coordenadasTreinadas/'+pontoDestino+'.csv' # caminho do arquivo
+    caminhoArquivo = os.path.normpath('coordenadasTreinadas/'+pontoDestino+'.csv') # caminho do arquivo (escrito em compatibilidade linux e windows)
 
     csvArq = open(caminhoArquivo,'r') # ponteiro pra um arquivo
     csvPtr = csv.reader(csvArq,delimiter=',') # ponteiro para um csv
@@ -45,7 +45,7 @@ def transportar(pontoOrigem,pontoDestino):
 
 def nomeToCoordenada(pontoTaxi):
 
-    caminhoArquivo = 'coordenadasTreinadas/'+pontoTaxi+'.csv' # caminho do arquivo
+    caminhoArquivo = os.path.normpath('coordenadasTreinadas/'+pontoTaxi+'.csv') # caminho do arquivo
 
     csvArq = open(caminhoArquivo,'r') # ponteiro pra um arquivo
     csvPtr = csv.reader(csvArq,delimiter=',') # ponteiro para um csv
@@ -73,7 +73,7 @@ def getPontosTreinados():
 
 def salvarQsa(linhaDestino,colunaDestino,nomePonto,qsa):
     
-    caminhoArquivo = 'coordenadasTreinadas/'+nomePonto+'.csv'
+    caminhoArquivo = os.path.normpath('coordenadasTreinadas/'+nomePonto+'.csv')
     
     csvArq = open(caminhoArquivo,'w')
     csvPtr = csv.writer(csvArq,delimiter=',')
