@@ -2,16 +2,15 @@ from funcoes import *
 
 # paramentros de treinamento
 # declarados globalmente para manipulação no frontend
-epsilon = 0.1
-fator_desconto = 0.9
+epsilon = 0.2
+fator_desconto = 0.92
 taxa_aprendizado = 0.9
-treinamentos = 15000
-passos = 15
+treinamentos = 5000
+passos = 5
 tentativa = 0
 passoAtual = 0
 
-def treinarPonto(linhaDestino,colunaDestino,janela,barraProgresso):
-    
+def treinarPonto(linhaDestino,colunaDestino,janela,barraProgresso,label):
     recompensa[linhaDestino][colunaDestino] = recompensaDestino
 
     # este valor deve ser o comprimento da progressbar
@@ -24,10 +23,10 @@ def treinarPonto(linhaDestino,colunaDestino,janela,barraProgresso):
 
             linha, coluna = setPosicaoInicial()
 
-            while not isEstadoFinal(linha,coluna):
+            while not isEstadoFinal(linha,coluna,recompensa):
                 linhaAntiga, colunaAntiga = linha, coluna
 
-                linha, coluna,acaoAtual = proximoEstado(linha, coluna, epsilon,qsa)
+                linha, coluna,acaoAtual = proximoEstado(linha, coluna, epsilon,qsa,recompensa)
                 
                 rec = recompensa[linha, coluna]
                 qValueAntigo = qsa[linhaAntiga,colunaAntiga,acaoAtual]
@@ -47,7 +46,8 @@ def treinarPonto(linhaDestino,colunaDestino,janela,barraProgresso):
         #resumido (adicionar for para regular passos)
         print('Treinando ponto: ('+str(linhaDestino)+','+str(colunaDestino)+') - '+str(passoAtual*passos)+' de '+str(treinamentos)+'...')
         #frontEnd
-        barraProgresso['value'] = passoAtual*0.1 # aumenta a fluidez da barra de progresso
+        barraProgresso['value'] = passoAtual/10 # aumenta a fluidez da barra de progresso
+        label['text'] = 'Treinamento...'+str(passoAtual/10)+'%'
         print('Passo atual'+str(passoAtual))
         janela.update_idletasks()
         passoAtual+=1

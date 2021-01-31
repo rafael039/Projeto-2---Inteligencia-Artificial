@@ -1,13 +1,13 @@
 from ambiente import *
 
 ## geração da origem e destino
-def isEstadoFinal(linha,coluna):
+def isEstadoFinal(linha,coluna,recompensa):
     if recompensa[linha][coluna] == recompensaDestino:
         return True
     else :
         return False
 
-def isParede(linha,coluna):
+def isParede(linha,coluna,recompensa):
     if recompensa[linha][coluna] == valorParede:
         return True
     else: 
@@ -38,7 +38,7 @@ def setPosicaoInicial():
     posicaox = np.random.randint(linhasAmbiente)
     posicaoy = np.random.randint(colunasAmbiente)
 
-    while isParede(posicaox,posicaoy):
+    while isParede(posicaox,posicaoy,recompensa):
         posicaox = np.random.randint(linhasAmbiente)
         posicaoy = np.random.randint(colunasAmbiente)
     return posicaox,posicaoy
@@ -53,7 +53,7 @@ def proximaAcao(linhaAtual,colunaAtual,epsilon,qsa):
 def proximaAcaoAleatoria(acoes):
         return np.random.choice(acoes)
         
-def proximoEstado(linhaAtual,colunaAtual,epsilon,qsa):
+def proximoEstado(linhaAtual,colunaAtual,epsilon,qsa,recompensa):
     proxLinha, proxColuna = linhaAtual, colunaAtual
     listaAcoes = acoes.copy()
     iAcao = proximaAcao(linhaAtual,colunaAtual,epsilon,qsa)
@@ -87,17 +87,17 @@ def proximoEstado(linhaAtual,colunaAtual,epsilon,qsa):
 
     return proxLinha,proxColuna,iAcao
 
-def menorCaminho(linhaInicial,colunaInicial,qsa):
-    if isEstadoFinal(linhaInicial,colunaInicial):
+def menorCaminho(linhaInicial,colunaInicial,qsa,recompensa):
+    if isEstadoFinal(linhaInicial,colunaInicial,recompensa):
         return []
     else:
         linhaAtual, colunaAtual = linhaInicial, colunaInicial
         caminho = []
         caminho.append([linhaAtual,colunaAtual])
 
-        while not isEstadoFinal(linhaAtual,colunaAtual):
+        while not isEstadoFinal(linhaAtual,colunaAtual,recompensa):
 
-            linhaAtual,colunaAtual,acaoAtual = proximoEstado(linhaAtual,colunaAtual,1,qsa)
+            linhaAtual,colunaAtual,acaoAtual = proximoEstado(linhaAtual,colunaAtual,1,qsa,recompensa)
 
             caminho.append([linhaAtual,colunaAtual])
             

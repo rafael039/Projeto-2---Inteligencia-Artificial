@@ -20,7 +20,16 @@ def viajar():
         messagebox.showerror('Erro','Ponto inválido!')
         return
         
-    print(transportar(origem,destino))
+    caminho = transportar(origem,destino)
+
+    # parte gráfica
+
+    canvasCarro = tk.Canvas(width=256,height=256)
+    imagemCarro = tk.PhotoImage(file=os.path.normpath("imagens/Carro.png")) 
+    canvasCarro.place(x=10,y=80)
+    canvasCarro.create_image(0, 0, image=imagemCarro, anchor='nw')
+
+
 
 # BUG: Função não limpa os valores do segundo treinamento em diante
 def treinar(entLinha,entColuna,entNome,janTreinamento,botao):
@@ -40,6 +49,10 @@ def treinar(entLinha,entColuna,entNome,janTreinamento,botao):
         coluna = int(entColuna.get())
         nome = entNome.get()
 
+        #reseta os valores
+        
+        recompensa = desenhaAmbiente() 
+
         if linha < linhasAmbiente and coluna < colunasAmbiente:
 
             lblTreinamento = tk.Label(
@@ -58,8 +71,8 @@ def treinar(entLinha,entColuna,entNome,janTreinamento,botao):
 
             progressoTreinamento['value'] = 0 #inicializa a barra de progresso
             janela.update_idletasks()
-            if not isParede(linha,coluna):
-                treinarPonto(linha,coluna,janela,progressoTreinamento)
+            if not isParede(linha,coluna,recompensa):
+                treinarPonto(linha,coluna,janela,progressoTreinamento,lblTreinamento)
 
                 #salvando arquivo
                 progressoTreinamento.destroy()
@@ -70,7 +83,6 @@ def treinar(entLinha,entColuna,entNome,janTreinamento,botao):
                 lblTreinamento['text'] = 'Concluído!'
                 janela.update_idletasks()
                 time.sleep(1)
-                
                 
             else:
                 messagebox.showerror('Erro','O ponto ('+str(linha)+','+str(coluna)+') é uma parede. \nPor favor, escolha um ponto válido.')
@@ -240,7 +252,7 @@ btnViajar.place(x=1000,y=8)
 # fim dos objetos dentro de frameControles
 
 # Imagem
-canvasMapa = tk.Canvas(width=1120,height=480)
+canvasMapa = tk.Canvas(master=janela,width=1120,height=480)
 canvasMapa.place(x=0,y=51)
 imagemMapa = tk.PhotoImage(file=os.path.normpath("imagens/Cenario.png")) 
 canvasMapa.create_image(0, 0, image=imagemMapa, anchor='nw')

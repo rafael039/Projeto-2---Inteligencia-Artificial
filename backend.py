@@ -1,6 +1,6 @@
 import os
 import csv
-from funcoes import menorCaminho
+from funcoes import *
 from ambiente import *
 from q_learning import *
 
@@ -8,6 +8,8 @@ def transportar(pontoOrigem,pontoDestino):
 
     qsa = [] 
     i,j = 0,0
+
+    recompensa = desenhaAmbiente() #reseta os valores
 
     caminhoArquivo = os.path.normpath('coordenadasTreinadas/'+pontoDestino+'.csv') # caminho do arquivo (escrito em compatibilidade linux e windows)
 
@@ -41,7 +43,7 @@ def transportar(pontoOrigem,pontoDestino):
 
     csvArq.close()
     
-    return menorCaminho(linhaOrigem,colunaOrigem,qsa)
+    return menorCaminho(linhaOrigem,colunaOrigem,qsa,recompensa)
 
 def nomeToCoordenada(pontoTaxi):
 
