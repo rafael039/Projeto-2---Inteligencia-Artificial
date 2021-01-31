@@ -4,6 +4,24 @@ from funcoes import *
 from ambiente import *
 from q_learning import *
 
+pontosTreinados = []
+
+# retorna o nome dos pontos treinados que estão na pasta coordenadastreinadas
+def getPontosTreinados():
+    global pontosTreinados
+    pontosTreinados.clear()
+    i=0
+    pontosTreinados = os.listdir('coordenadasTreinadas')
+    for ponto in pontosTreinados:
+        if ponto.startswith('.'):
+            pontosTreinados.remove(ponto)
+        else:
+            ponto = ponto.split('.csv')
+            pontosTreinados[i] = ponto[0]
+        i+=1
+
+getPontosTreinados()
+
 def transportar(pontoOrigem,pontoDestino):
 
     qsa = [] 
@@ -59,19 +77,6 @@ def nomeToCoordenada(pontoTaxi):
 
     return coordenada
 
-# retorna o nome dos pontos treinados que estão na pasta coordenadastreinadas
-def getPontosTreinados():
-    
-    i=0
-    pontosTreinados = os.listdir('coordenadasTreinadas')
-    for ponto in pontosTreinados:
-        if ponto.startswith('.'):
-            pontosTreinados.remove(ponto)
-        else:
-            ponto = ponto.split('.csv')
-            pontosTreinados[i] = ponto[0]
-        i+=1
-    return pontosTreinados
 
 def salvarQsa(linhaDestino,colunaDestino,nomePonto,qsa):
     
@@ -85,3 +90,5 @@ def salvarQsa(linhaDestino,colunaDestino,nomePonto,qsa):
     for linhaQsa in qsa: # uma linha da tabela qsa, contém todas as açoes para todos os pontos da linha
         csvPtr.writerow(linhaQsa) 
     print("Concluído!")
+
+

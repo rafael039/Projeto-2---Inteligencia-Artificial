@@ -170,8 +170,6 @@ na borda do mapa'
     btnNovoPonto.place(x=80,y=190)
 
 
-pontosTreinados = getPontosTreinados()
-
 #declaração das janelas
 janela = tk.Tk()
 janela.geometry('1120x530')
@@ -223,6 +221,19 @@ comboboxDestino = ttk.Combobox(
     values=pontosTreinados
 )
 comboboxDestino.place(x=300,y=13)
+
+#
+
+btnAtualizar = tk.Button(
+    master=frameControles,
+    width=5,
+    height=1,
+    activebackground='#ddd',
+    activeforeground='#555',
+    text = 'Atualizar',
+    command=lambda: getPontosTreinados()
+)
+btnAtualizar.place(x=450,y=8)
 
 #
 
