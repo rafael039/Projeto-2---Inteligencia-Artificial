@@ -1,5 +1,4 @@
 import numpy as np
-import csv
 
 # variáveis do ambiente
 linhasAmbiente = 9

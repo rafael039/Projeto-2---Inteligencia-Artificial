@@ -32,7 +32,7 @@ def setOrigemDestino():
 
         #return origemx,origemy,destinox,destinoy
 
-def setPosicaoInicial():
+def setPosicaoInicial(recompensa):
     posicaox,posicaoy = 0,0
 
     posicaox = np.random.randint(linhasAmbiente)

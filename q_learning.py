@@ -10,7 +10,7 @@ passos = 5
 tentativa = 0
 passoAtual = 0
 
-def treinarPonto(linhaDestino,colunaDestino,janela,barraProgresso,label):
+def treinarPonto(linhaDestino,colunaDestino,recompensa,janela,barraProgresso,label):
     recompensa[linhaDestino][colunaDestino] = recompensaDestino
 
     # este valor deve ser o comprimento da progressbar
@@ -21,7 +21,7 @@ def treinarPonto(linhaDestino,colunaDestino,janela,barraProgresso,label):
     for passoAtual in range(progresso):
         for tentativa in range(passos):
 
-            linha, coluna = setPosicaoInicial()
+            linha, coluna = setPosicaoInicial(recompensa)
 
             while not isEstadoFinal(linha,coluna,recompensa):
                 linhaAntiga, colunaAntiga = linha, coluna

@@ -26,7 +26,7 @@ def viajar():
 
     canvasCarro = tk.Canvas(width=256,height=256)
     imagemCarro = tk.PhotoImage(file=os.path.normpath("imagens/Carro.png")) 
-    canvasCarro.place(x=10,y=80)
+    canvasCarro.place(x=10,y=100)
     canvasCarro.create_image(0, 0, image=imagemCarro, anchor='nw')
 
 
@@ -72,7 +72,7 @@ def treinar(entLinha,entColuna,entNome,janTreinamento,botao):
             progressoTreinamento['value'] = 0 #inicializa a barra de progresso
             janela.update_idletasks()
             if not isParede(linha,coluna,recompensa):
-                treinarPonto(linha,coluna,janela,progressoTreinamento,lblTreinamento)
+                qsa = treinarPonto(linha,coluna,recompensa,janela,progressoTreinamento,lblTreinamento)
 
                 #salvando arquivo
                 progressoTreinamento.destroy()
