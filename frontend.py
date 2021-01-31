@@ -24,12 +24,13 @@ def viajar():
 
     # parte gráfica
 
-    canvasCarro = tk.Canvas(width=256,height=256)
-    imagemCarro = tk.PhotoImage(file=os.path.normpath("imagens/Carro.png")) 
-    canvasCarro.place(x=10,y=100)
+    canvasCarro = tk.Canvas(width=48,height=48)  # Tamanho da Imagen (48x48 px)
+    imagemCarro = tk.PhotoImage(file=os.path.normpath("imagens/CarroPequeno1.png"))
+    # X = Muda a posição da Linha -- Posição Inicial (0/) = 40  F = (N_coluna * 50) + PosicaoInicial
+    # Y = Muda posição de Coluna  -- Posição Inicial (/0) = 76  F = (N_linha * 50) + PosicaoInicial
+    # Passo para avança 50 em 50
+    canvasCarro.place(x=40,y=76)
     canvasCarro.create_image(0, 0, image=imagemCarro, anchor='nw')
-
-
 
 # BUG: Função não limpa os valores do segundo treinamento em diante
 def treinar(entLinha,entColuna,entNome,janTreinamento,botao):
