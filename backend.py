@@ -19,6 +19,7 @@ def getPontosTreinados():
             ponto = ponto.split('.csv')
             pontosTreinados[i] = ponto[0]
         i+=1
+    return pontosTreinados
 
 getPontosTreinados()
 

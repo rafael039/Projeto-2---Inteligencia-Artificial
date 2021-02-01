@@ -47,7 +47,7 @@ def treinarPonto(linhaDestino,colunaDestino,recompensa,janela,barraProgresso,lab
         print('Treinando ponto: ('+str(linhaDestino)+','+str(colunaDestino)+') - '+str(passoAtual*passos)+' de '+str(treinamentos)+'...')
         #frontEnd
         barraProgresso['value'] = passoAtual/10 # aumenta a fluidez da barra de progresso
-        label['text'] = 'Treinamento...'+str(passoAtual/10)+'%'
+        label['text'] = 'Treinando... '+str(passoAtual/10)+'%'
         print('Passo atual'+str(passoAtual))
         janela.update_idletasks()
         passoAtual+=1

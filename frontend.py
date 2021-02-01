@@ -4,6 +4,41 @@ from tkinter import Toplevel, ttk, messagebox
 from backend import *
 from q_learning import *
 
+linhas = []
+
+def desenharRota(caminho,origem,destino):
+    # ponto inicial                x0 = 65px | y0 = 50px
+    # deslocamento por estado      50 px 
+    for i in linhas:
+        canvasMapa.delete(i)
+    coord = []
+    deslocamento = 50
+    ptInicialX = 65
+    ptInicialY = 50
+    
+    #canvasMapa.create_oval(origem[0],origem[0]+100,origem[1],origem[1]+100,fill='blue')
+    #canvasMapa.create_oval(destino[0],destino[0]+100,destino[1],destino[1]+100,fill='red')
+    #desenhar rota
+
+    for i in range (len(caminho)-1):
+        inicioReta = caminho[i]
+        fimReta = caminho[i+1]
+        coord.append(inicioReta[1]*deslocamento+ptInicialX)
+        coord.append(inicioReta[0]*deslocamento+ptInicialY)
+        coord.append(fimReta[1]*deslocamento+ptInicialX)
+        coord.append(fimReta[0]*deslocamento+ptInicialY)
+        
+    canvasMapa.create_line(coord,fill='blue',width=3)
+
+    
+
+    #
+    #coord = [65,50,65,100]
+
+
+    
+    #print('x= '+str(linhaAtual)+' y= '+str(colunaAtual)+'| Acao:'+acoes[acaoAtual])
+
 def viajar():
     """
     Função que vai definir a ação do botão viajar 
@@ -24,15 +59,18 @@ def viajar():
 
     # parte gráfica
 
-    canvasCarro = tk.Canvas(width=48,height=48)  # Tamanho da Imagen (48x48 px)
-    imagemCarro = tk.PhotoImage(file=os.path.normpath("imagens/CarroPequeno1.png"))
+    desenharRota(caminho,nomeToCoordenada(origem),nomeToCoordenada(destino))
+
+    #canvasCarro = tk.Canvas(width=48,height=48)  # Tamanho da Imagen (48x48 px)
+    
+    #imagemCarro = tk.PhotoImage(file=os.path.normpath("imagens/CarroPequeno1.png"))
     # X = Muda a posição da Linha -- Posição Inicial (0/) = 40  F = (N_coluna * 50) + PosicaoInicial
     # Y = Muda posição de Coluna  -- Posição Inicial (/0) = 76  F = (N_linha * 50) + PosicaoInicial
     # Passo para avança 50 em 50
-    canvasCarro.place(x=40,y=76)
-    canvasCarro.create_image(0, 0, image=imagemCarro, anchor='nw')
+    
+    #canvasMapa.create_oval(50, 50, 0,0)
+    #canvasMapa.update_idletasks()
 
-# BUG: Função não limpa os valores do segundo treinamento em diante
 def treinar(entLinha,entColuna,entNome,janTreinamento,botao):
     """
     Função que manipula a janela dispara o treinamento do ponto. \n
@@ -84,7 +122,7 @@ def treinar(entLinha,entColuna,entNome,janTreinamento,botao):
                 lblTreinamento['text'] = 'Concluído!'
                 janela.update_idletasks()
                 time.sleep(1)
-                
+                messagebox.showinfo('Aviso','É necessario reiniciar a aplicação para ver o novo ponto!')
             else:
                 messagebox.showerror('Erro','O ponto ('+str(linha)+','+str(coluna)+') é uma parede. \nPor favor, escolha um ponto válido.')
                 progressoTreinamento.destroy()
@@ -194,7 +232,7 @@ frameControles.place(width=1280,height=50)
 
 lblListOrigem = tk.Label(
     master=frameControles,
-    text='Ponto:'
+    text='Origem:'
 )
 lblListOrigem.place(x=5,y=13)
 
@@ -224,16 +262,16 @@ comboboxDestino.place(x=300,y=13)
 
 #
 
-btnAtualizar = tk.Button(
-    master=frameControles,
-    width=5,
-    height=1,
-    activebackground='#ddd',
-    activeforeground='#555',
-    text = 'Atualizar',
-    command=lambda: getPontosTreinados()
-)
-btnAtualizar.place(x=450,y=8)
+#btnAtualizar = tk.Button(
+#    master=frameControles,
+#    width=5,
+#    height=1,
+#    activebackground='#ddd',
+#    activeforeground='#555',
+#    text = 'Atualizar',
+#    command=lambda: getPontosTreinados()
+#)
+#btnAtualizar.place(x=450,y=8)
 
 #
 
