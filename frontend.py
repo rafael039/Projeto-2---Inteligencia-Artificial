@@ -5,12 +5,45 @@ from backend import *
 from q_learning import *
 
 
-linhas = []
+def verUltimoCaminho():
+
+    janUltimoCaminho=Toplevel(janela)
+    janUltimoCaminho.geometry('300x150')
+    janUltimoCaminho.title('Treinar um novo ponto')
+    janUltimoCaminho.pack_propagate(0)
+
+    caminho = transportar(origem,destino)
+
+    lblCaminho = tk.Label(
+        master=janUltimoCaminho,
+        text='O último caminho percorrido foi: [x,y]'
+    )
+    lblCaminho.place(x=22,y=5)
+
+    strCaminho = ''
+    for i in caminho:
+        if caminho.index(i) % 5 == 0:
+            strCaminho+='\n'
+        strCaminho+= str(i)
+
+
+    lblCaminhoPercorrido = tk.Label(
+        master=janUltimoCaminho,
+        text=strCaminho
+    )
+    lblCaminhoPercorrido.place(x=40,y=40)
+
+    
+
+
+objetosTela = []
+origem = ''
+destino = ''
 def desenharRota(caminho,origem,destino):
-    global linhas
+    global objetosTela
     # ponto inicial                x0 = 65px | y0 = 50px
     # deslocamento por estado      50 px 
-    for i in linhas:
+    for i in objetosTela:
         canvasMapa.delete(i)
     coord = []
     deslocamento = 50
@@ -43,20 +76,21 @@ def desenharRota(caminho,origem,destino):
     pontos.append(temp.copy())
     temp.clear()
 
+    objetosTela.append(canvasMapa.create_line(coord,fill='blue',width=3))
 
-    linhas.append(canvasMapa.create_line(coord,fill='blue',width=3))
+    objetosTela.append(canvasMapa.create_oval(pontos[0], fill='red',width=3))
+    objetosTela.append(canvasMapa.create_oval(pontos[1], fill='yellow',width=3))
 
-    linhas.append(canvasMapa.create_oval(pontos[0], fill='red',width=3))
-    linhas.append(canvasMapa.create_oval(pontos[1], fill='yellow',width=3))
-
+    btnMostrarCaminho['state'] = tk.NORMAL
     
     #print('x= '+str(linhaAtual)+' y= '+str(colunaAtual)+'| Acao:'+acoes[acaoAtual])
+
 
 def viajar():
     """
     Função que vai definir a ação do botão viajar 
     """
-
+    global origem,destino
     origem = comboboxOrigem.get()
     destino = comboboxDestino.get()
     pontosDisponiveis = getPontosTreinados()
@@ -248,7 +282,8 @@ frameControles.place(width=1280,height=50)
 
 lblListOrigem = tk.Label(
     master=frameControles,
-    text='Origem:'
+    text='Origem:',
+    background='#fed'
 )
 lblListOrigem.place(x=5,y=13)
 
@@ -264,7 +299,8 @@ comboboxOrigem.place(x=70,y=13)
 
 lblListDestino = tk.Label(
     master=frameControles,
-    text='Destino:'
+    text='Destino:',
+    background='#fed'
 )
 lblListDestino.place(x=280,y=13)
 
@@ -278,16 +314,17 @@ comboboxDestino.place(x=350,y=13)
 
 #
 
-#btnAtualizar = tk.Button(
-#    master=frameControles,
-#    width=5,
-#    height=1,
-#    activebackground='#ddd',
-#    activeforeground='#555',
-#    text = 'Atualizar',
-#    command=lambda: getPontosTreinados()
-#)
-#btnAtualizar.place(x=450,y=8)
+btnMostrarCaminho = tk.Button(
+    master=frameControles,
+    width=8,
+    height=1,
+    activebackground='#ddd',
+    activeforeground='#555',
+    text = 'Ver Caminho',
+    command=verUltimoCaminho,
+    state=tk.DISABLED
+)
+btnMostrarCaminho.place(x=550,y=8)
 
 #
 
