@@ -101,7 +101,7 @@ def menorCaminho(linhaInicial,colunaInicial,qsa,recompensa):
 
             caminho.append([linhaAtual,colunaAtual])
             
-            print('x= '+str(linhaAtual)+' y= '+str(colunaAtual)+'| Acao:'+acoes[acaoAtual])
+            #print('x= '+str(linhaAtual)+' y= '+str(colunaAtual)+'| Acao:'+acoes[acaoAtual])
             #print(isEstadoFinal(linhaAtual,colunaAtual))
     return caminho
 

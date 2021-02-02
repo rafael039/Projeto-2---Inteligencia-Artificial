@@ -15,7 +15,7 @@ def treinarPonto(linhaDestino,colunaDestino,recompensa,janela,barraProgresso,lab
 
     # este valor deve ser o comprimento da progressbar
     progresso=int(treinamentos/passos) 
-    print('Treinando para o ponto ('+str(linhaDestino)+','+str(colunaDestino)+'):')
+    #print('Treinando para o ponto ('+str(linhaDestino)+','+str(colunaDestino)+'):')
 
 
     for passoAtual in range(progresso):
@@ -44,17 +44,17 @@ def treinarPonto(linhaDestino,colunaDestino,recompensa,janela,barraProgresso,lab
             #print(str(j)+' de '+str(treinamentos)+'...')
 
         #resumido (adicionar for para regular passos)
-        print('Treinando ponto: ('+str(linhaDestino)+','+str(colunaDestino)+') - '+str(passoAtual*passos)+' de '+str(treinamentos)+'...')
+        #print('Treinando ponto: ('+str(linhaDestino)+','+str(colunaDestino)+') - '+str(passoAtual*passos)+' de '+str(treinamentos)+'...')
         #frontEnd
         barraProgresso['value'] = passoAtual/10 # aumenta a fluidez da barra de progresso
         label['text'] = 'Treinando... '+str(passoAtual/10)+'%'
-        print('Passo atual'+str(passoAtual))
+        #print('Passo atual'+str(passoAtual))
         janela.update_idletasks()
         passoAtual+=1
     
 
-    print('O desgracadinho ta monstro!')
-    print("-----------------------------------------------------")
-    print("-----------------------------------------------------")
-    print("-----------------------------------------------------")
+    #print('O desgracadinho ta monstro!')
+    #print("-----------------------------------------------------")
+    #print("-----------------------------------------------------")
+    #print("-----------------------------------------------------")
     return qsa
