@@ -4,9 +4,10 @@ from tkinter import Toplevel, ttk, messagebox
 from backend import *
 from q_learning import *
 
-linhas = []
 
+linhas = []
 def desenharRota(caminho,origem,destino):
+    global linhas
     # ponto inicial                x0 = 65px | y0 = 50px
     # deslocamento por estado      50 px 
     for i in linhas:
@@ -15,10 +16,10 @@ def desenharRota(caminho,origem,destino):
     deslocamento = 50
     ptInicialX = 65
     ptInicialY = 50
-    
-    #canvasMapa.create_oval(origem[0],origem[0]+100,origem[1],origem[1]+100,fill='blue')
-    #canvasMapa.create_oval(destino[0],destino[0]+100,destino[1],destino[1]+100,fill='red')
-    #desenhar rota
+    temp = []
+    pontos = []
+
+    ##calculo para desenhar rota
 
     for i in range (len(caminho)-1):
         inicioReta = caminho[i]
@@ -27,14 +28,26 @@ def desenharRota(caminho,origem,destino):
         coord.append(inicioReta[0]*deslocamento+ptInicialY)
         coord.append(fimReta[1]*deslocamento+ptInicialX)
         coord.append(fimReta[0]*deslocamento+ptInicialY)
-        
-    canvasMapa.create_line(coord,fill='blue',width=3)
 
-    
+    #calculo para desenhar os pontos
+    temp.append(origem[1]*deslocamento+ptInicialX-8)
+    temp.append(origem[0]*deslocamento+ptInicialY-8)
+    temp.append(origem[1]*deslocamento+ptInicialX+8)
+    temp.append(origem[0]*deslocamento+ptInicialY+8)
+    pontos.append(temp.copy())
+    temp.clear()
+    temp.append(destino[1]*deslocamento+ptInicialX-8)
+    temp.append(destino[0]*deslocamento+ptInicialY-8)
+    temp.append(destino[1]*deslocamento+ptInicialX+8)
+    temp.append(destino[0]*deslocamento+ptInicialY+8)
+    pontos.append(temp.copy())
+    temp.clear()
 
-    #
-    #coord = [65,50,65,100]
 
+    linhas.append(canvasMapa.create_line(coord,fill='blue',width=3))
+
+    linhas.append(canvasMapa.create_oval(pontos[0], fill='red',width=3))
+    linhas.append(canvasMapa.create_oval(pontos[1], fill='yellow',width=3))
 
     
     #print('x= '+str(linhaAtual)+' y= '+str(colunaAtual)+'| Acao:'+acoes[acaoAtual])
@@ -50,7 +63,10 @@ def viajar():
     if origem == '' or destino == '':
         messagebox.showerror('Erro','Escolha um ponto!')
         return
-    
+    if origem == destino:
+        messagebox.showerror('Erro','A origem é igual ao destino!')
+        return
+
     if origem not in pontosDisponiveis or destino not in pontosDisponiveis:
         messagebox.showerror('Erro','Ponto inválido!')
         return
@@ -186,13 +202,13 @@ na borda do mapa'
         master=janNovoPonto,
         text='Nome:'
     )
-    lblNome.place(x=80,y=145)
+    lblNome.place(x=20,y=145)
 
     entNome = tk.Entry(
         master=janNovoPonto,
-        width=10
+        width=27
     )
-    entNome.place(x=80,y=165)
+    entNome.place(x=20,y=165)
     #
     btnNovoPonto = tk.Button(
         master=janNovoPonto,
@@ -212,7 +228,7 @@ na borda do mapa'
 janela = tk.Tk()
 janela.geometry('1120x530')
 janela.resizable(width=False,height=False)
-janela.title('Taxi')
+janela.title('QueroTaxi')
 
 
 #declaração das janelas
@@ -238,11 +254,11 @@ lblListOrigem.place(x=5,y=13)
 
 comboboxOrigem = ttk.Combobox(
     master=frameControles,
-    width=10,
+    width=20,
     height=5,
     values=pontosTreinados
 )
-comboboxOrigem.place(x=80,y=13)
+comboboxOrigem.place(x=70,y=13)
 
 #
 
@@ -250,15 +266,15 @@ lblListDestino = tk.Label(
     master=frameControles,
     text='Destino:'
 )
-lblListDestino.place(x=220,y=13)
+lblListDestino.place(x=280,y=13)
 
 comboboxDestino = ttk.Combobox(
     master=frameControles,
-    width=10,
+    width=20,
     height=5,
     values=pontosTreinados
 )
-comboboxDestino.place(x=300,y=13)
+comboboxDestino.place(x=350,y=13)
 
 #
 
